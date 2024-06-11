@@ -6,9 +6,11 @@ import 'package:video_player/video_player.dart';
 
 class Screen2 extends StatefulWidget {
   final String textlast;
-  final String rating;
+  final String img;
+  final List<String> geners;
+  final String overview;
 
-  const Screen2({super.key, required this.textlast, required this.rating});
+  const Screen2({super.key, required this.img, required this.textlast, required this.geners, required this.overview});
 
   @override
   State<Screen2> createState() => _Screen2State();
@@ -22,17 +24,23 @@ class _Screen2State extends State<Screen2> {
     "assets/h.png",
     "assets/i.png"
   ];
-  List<String> textlast=["Tom Holland","Zendaya","Benedict\nCumberbatch","Jacon\nBatalon"];
-  late FlickManager flickManager;
+  List<String> textlast = [
+    "Tom Holland",
+    "Zendaya",
+    "Benedict\nCumberbatch",
+    "Jacon\nBatalon"
+  ];
+
+  // late FlickManager flickManager;
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    flickManager = FlickManager(
-        videoPlayerController: VideoPlayerController.networkUrl(Uri.parse(
-            "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4")));
-  }
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   flickManager = FlickManager(
+  //       videoPlayerController: VideoPlayerController.networkUrl(Uri.parse(
+  //           "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4")));
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -43,40 +51,44 @@ class _Screen2State extends State<Screen2> {
           Container(
             height: 280.h,
             width: double.infinity,
-            child: Center(child: FlickVideoPlayer(flickManager: flickManager)),
+            child: Image.network(widget.img),
+            // child: Center(child: FlickVideoPlayer(flickManager: flickManager)),
           ),
           Container(
             width: 500.w,
             height: 532.h,
             color: Colors.white,
             child: Padding(
-              padding: const EdgeInsets.only(top: 8,left: 10),
+              padding: const EdgeInsets.only(top: 8, left: 10),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(left: 5
-                      ),
+                      padding: const EdgeInsets.only(left: 5),
                       child: Row(
                         children: [
-                          Text(
-                            widget.textlast,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 14.sp,
-                              fontFamily: 'Mulish',
-                              fontWeight: FontWeight.w700,
-                              height: 0,
-                              letterSpacing: 0.28,
+                          SizedBox(width: 200,
+                            child: Text(
+                              widget.textlast,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 20,
+                                  fontFamily: "mulish",
+                                  fontWeight: FontWeight.w500),
                             ),
                           ),
-                          SizedBox(width: 190.w,),
-                          Icon(Icons.bookmark_border_outlined,color: Colors.black,)
+
+                          SizedBox(
+                            width: 130.w,
+                          ),
+                          Icon(
+                            Icons.bookmark_border_outlined,
+                            color: Colors.black,
+                          )
                         ],
                       ),
                     ),
-
                     Padding(
                       padding: const EdgeInsets.only(top: 5),
                       child: Row(
@@ -97,16 +109,27 @@ class _Screen2State extends State<Screen2> {
                               print(rating);
                             },
                           ),
-                          Text(widget.rating),
+                          Text(
+                           "5.6",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14.sp,
+                              fontFamily: 'Mulish',
+                              fontWeight: FontWeight.w200,
+                              height: 0,
+                              letterSpacing: 0.28,
+                            ),
+                          ),
                         ],
                       ),
                     ),
-                    SizedBox(height: 10,),
-
+                    SizedBox(
+                      height: 10,
+                    ),
                     SizedBox(
                       height: 30.h,
                       child: ListView.separated(
-                          itemCount: 3,
+                          itemCount: widget.geners.length,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) {
                             return Container(
@@ -118,13 +141,12 @@ class _Screen2State extends State<Screen2> {
                                       borderRadius: BorderRadius.circular(20))),
                               child: Center(
                                 child: Text(
-                                  textbox[index],
+                                  widget.geners[index],
                                   style: TextStyle(
                                     color: Color(0xFF87A3E8),
                                     fontSize: 11.sp,
                                     fontFamily: 'Mulish',
                                     fontWeight: FontWeight.w700,
-                                    height: 0,
                                     letterSpacing: 0.16,
                                   ),
                                 ),
@@ -137,7 +159,9 @@ class _Screen2State extends State<Screen2> {
                             );
                           }),
                     ),
-                    SizedBox(height: 10,),
+                    SizedBox(
+                      height: 10,
+                    ),
                     Padding(
                       padding: const EdgeInsets.only(left: 10),
                       child: Row(
@@ -231,7 +255,9 @@ class _Screen2State extends State<Screen2> {
                         ],
                       ),
                     ),
-                    SizedBox(height: 15,),
+                    SizedBox(
+                      height: 15,
+                    ),
                     Text(
                       'Description',
                       style: TextStyle(
@@ -241,9 +267,10 @@ class _Screen2State extends State<Screen2> {
                         fontWeight: FontWeight.w900,
                       ),
                     ),
-                    SizedBox(height: 10,),
-                    Text(
-                      "'With Spider-Man' s identity now revealed, Peter asks Doctor \n Strange for help. When a spell goes wrong, dangerous \n foes from other worlds start to appear, forcing Peter to \n discover what it truly means to be Spider-Man.",
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(widget.overview,
                       style: TextStyle(
                         color: Color(0xFF9B9B9B),
                         fontSize: 13.sp,
@@ -251,7 +278,9 @@ class _Screen2State extends State<Screen2> {
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                    SizedBox(height: 10,),
+                    SizedBox(
+                      height: 10,
+                    ),
                     Row(
                       children: [
                         Text(
@@ -265,7 +294,9 @@ class _Screen2State extends State<Screen2> {
                             letterSpacing: 0.32,
                           ),
                         ),
-                        SizedBox(width: 240,),
+                        SizedBox(
+                          width: 240,
+                        ),
                         Container(
                           width: 75.w,
                           height: 30.h,
@@ -273,7 +304,8 @@ class _Screen2State extends State<Screen2> {
                             color: Colors.white24,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(40),
-                                side: BorderSide(width: 1, color: Colors.black12)),
+                                side: BorderSide(
+                                    width: 1, color: Colors.black12)),
                           ),
                           child: Center(
                               child: Text(
@@ -287,34 +319,42 @@ class _Screen2State extends State<Screen2> {
                         )
                       ],
                     ),
-                    SizedBox(height: 15.h,),
+                    SizedBox(
+                      height: 15.h,
+                    ),
                     Container(
                       height: 190.h,
                       child: ListView.separated(
                         scrollDirection: Axis.horizontal,
                         itemCount: 4,
                         itemBuilder: (context, index) {
-                          return Container(width: 130.w,
-                              height: 200.h,decoration: ShapeDecoration(color:Colors.white,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)) ),
+                          return Container(
+                              width: 130.w,
+                              height: 200.h,
+                              decoration: ShapeDecoration(
+                                  color: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20))),
                               child: Column(
                                 children: [
-                                  Image.asset(imagebox[index],fit: BoxFit.cover,),
+                                  Image.asset(
+                                    imagebox[index],
+                                    fit: BoxFit.cover,
+                                  ),
                                   Padding(
                                     padding: const EdgeInsets.only(top: 10),
                                     child: Text(
                                       textlast[index],
                                       style: TextStyle(
-                                        color: Color(0xFF110E47),
-                                        fontSize: 18,
-                                        fontFamily: 'Mulish',
-                                        fontWeight: FontWeight.w400,
-                                        height: 1
-                                      ),
+                                          color: Color(0xFF110E47),
+                                          fontSize: 18,
+                                          fontFamily: 'Mulish',
+                                          fontWeight: FontWeight.w400,
+                                          height: 1),
                                     ),
                                   )
                                 ],
                               ));
-
                         },
                         separatorBuilder: (BuildContext context, int index) {
                           return SizedBox(
